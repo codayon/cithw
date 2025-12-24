@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import express from "express";
 import mongoose from "mongoose";
 import { User } from "./userSchema.js";
+import { sendWelcomeEmail } from "./emailConfig.js";
 
 const app = express();
 const port = 3000;
@@ -24,6 +25,7 @@ app.post("/", async (req, res) => {
       password: hashedPassword,
     });
     await newUser.save();
+    sendWelcomeEmail(email, username);
     res.status(201).json({ message: "Your account has been created" });
   } catch (err) {
     console.error(err.message);
