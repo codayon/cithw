@@ -1,4 +1,5 @@
 import "dotenv/config";
+import bcrypt from "bcrypt";
 import express from "express";
 import mongoose from "mongoose";
 import { User } from "./userSchema.js";
@@ -15,9 +16,15 @@ app.use(express.json());
 
 app.post("/", async (req, res) => {
   try {
-    const newUser = new User(req.body);
+    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
     await newUser.save();
-    res.status(201).json(newUser);
+    res.status(201).json({ message: "Your account has been created" });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: "Something went wrong on our end" });
