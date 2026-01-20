@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 
 const sendOtpEmail = async (email, otp, username) => {
   const mailOptions = {
-    from: `"Granpa Raayon" <${process.env.EMAIL_USER}>`,
+    from: `"Grandpa Raayon" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: "Your Verification Code",
     text: `Hi ${username}, your OTP is ${otp}. It expires in 10 minutes.`,
