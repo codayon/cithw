@@ -73,31 +73,6 @@ const logIn = async (req, res) => {
   }
 };
 
-const logOut = (req, res) => {
-  if (!req.session.userId) {
-    return res.status(400).json({
-      success: false,
-      message: "You aren't even logged in!",
-    });
-  }
-
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({
-        success: false,
-        message: "Logout failed on the server.",
-      });
-    }
-
-    res.clearCookie("connect.sid");
-
-    return res.status(200).json({
-      success: true,
-      message: "You have successfully logged out.",
-    });
-  });
-};
-
 const resendOtp = async (req, res) => {
   try {
     const { email } = req.body;
